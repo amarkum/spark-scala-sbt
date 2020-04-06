@@ -1,4 +1,4 @@
-Address,City,Company,Contact First Name,Contact Last Name,Region,Reseller,State,Zip
+Address,City,Company,FirstName,LastName,Region,Reseller,State,Zip
 384 Broad St.,Wayne,Interstate Shop,John,Kelly,USA East,0,NJ,18322
 123 Summer Rd.,Middletown,Daycare One,Lisa,Smith,USA East,0,NJ,09882
 7262 18th St.,New York,Eastern Data,Anna,Lincoln,USA East,0,NY,03887
