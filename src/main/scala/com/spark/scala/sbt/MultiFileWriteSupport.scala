@@ -42,6 +42,11 @@ object MultiFileWriteSupport {
       .mode("overwrite")
       .json("src/main/resources/json/")
 
+    // to AVRO
+    dfCSV.write
+      .format("avro")
+      .mode("overwrite")
+      .save("src/main/resources/avro/")
 
   }
 }
