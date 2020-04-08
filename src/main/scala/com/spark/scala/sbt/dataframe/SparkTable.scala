@@ -12,7 +12,7 @@ object SparkTable {
       .getOrCreate()
 
     val dataFrame = sparkSession.read.options(Map("header" -> "true", "inferSchema" -> "true"))
-      .csv("src/main/resources/csv/*")
+      .csv("src/main/resources/dataframe/csv/*")
 
     dataFrame.show()
 

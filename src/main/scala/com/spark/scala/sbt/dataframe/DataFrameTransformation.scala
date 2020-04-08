@@ -13,7 +13,7 @@ object DataFrameTransformation {
 
     val dataFrame = sparkSession.read
       .options(Map("header" -> "true", "inferSchema" -> "true"))
-      .csv("src/main/resources/csv/*")
+      .csv("src/main/resources/dataframe/csv/*")
 
     // .select() is used to select specific columns from a Data Frame
     val selectedDF = dataFrame.select("FirstName","Company")

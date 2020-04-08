@@ -28,25 +28,25 @@ object MultiFileWriteSupport {
     dfCSV.write
       .option("compression","none")
       .mode("overwrite")
-      .orc("src/main/resources/orc/")
+      .orc("src/main/resources/dataframe/orc/")
 
     // to Parquet
     dfCSV.write
       .option("compression","none")
       .mode("overwrite")
-      .parquet("src/main/resources/parquet/")
+      .parquet("src/main/resources/dataframe/parquet/")
 
     // to JSON
     dfCSV.write
       .option("compression","none")
       .mode("overwrite")
-      .json("src/main/resources/json/")
+      .json("src/main/resources/dataframe/json/")
 
     // to AVRO
     dfCSV.write
       .format("avro")
       .mode("overwrite")
-      .save("src/main/resources/avro/")
+      .save("src/main/resources/dataframe/avro/")
 
   }
 }

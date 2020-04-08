@@ -13,7 +13,7 @@ object SparkDataFrameFromCSV {
       .getOrCreate()
 
     val df = sparkSession.read.options(Map("header" -> "true", "inferSchema" -> "true"))
-      .csv("src/main/resources/csv/customer.csv")
+      .csv("src/main/resources/dataframe/csv/customer.csv")
 
     df.printSchema()
     df.show()

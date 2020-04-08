@@ -24,7 +24,7 @@ object AvroProcessing {
     avroDF.write
       .option("compression","none")
       .mode("overwrite")
-      .csv("src/main/resources/avro-csv")
+      .csv("src/main/resources/dataframe/avro-csv")
   }
 
 }

@@ -16,13 +16,13 @@ object MultiFileReadSupport {
      * Read fro various types of input and create a Data Frame
      */
     val dfCSV = sparkSession.read.options(Map("header" -> "true", "inferSchema" -> "true"))
-      .csv("src/main/resources/csv/*")
+      .csv("src/main/resources/dataframe/csv/*")
 
     val dfParquet = sparkSession.read.options(Map("inferSchema" -> "true"))
-      .parquet("src/main/resources/parquet/*")
+      .parquet("src/main/resources/dataframe/parquet/*")
 
     val dfORC = sparkSession.read.options(Map("inferSchema" -> "true"))
-      .orc("src/main/resources/orc/*")
+      .orc("src/main/resources/dataframe/orc/*")
 
     /**
      * Print the Schema of the Data Frame and it's content.

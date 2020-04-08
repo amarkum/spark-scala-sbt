@@ -30,7 +30,7 @@ object CustomSchema {
       val dataFrame = sparkSession.read
         .schema(customSchema)
         .options(Map("header"->"true"))
-        .csv("src/main/resources/csv/*")
+        .csv("src/main/resources/dataframe/csv/*")
 
     dataFrame.printSchema()
     dataFrame.show()
