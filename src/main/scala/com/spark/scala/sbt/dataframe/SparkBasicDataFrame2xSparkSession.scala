@@ -1,4 +1,4 @@
-package com.spark.scala.sbt
+package com.spark.scala.sbt.dataframe
 
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{IntegerType, StructField, StructType}
