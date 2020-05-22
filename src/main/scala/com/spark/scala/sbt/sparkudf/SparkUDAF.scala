@@ -7,9 +7,6 @@ import org.apache.spark.sql.Row
 import org.apache.spark.sql.expressions.{MutableAggregationBuffer, UserDefinedAggregateFunction}
 import org.apache.spark.sql.types.{StructField, _}
 
-//Extend UserDefinedAggregateFunction to write custom aggregate function
-//You can also specify any constructor arguments. For instance you
-//can have CustomMean(arg1: Int, arg2: String)
 class YearlyAvg() extends UserDefinedAggregateFunction {
 
   // Input Data Type Schema
@@ -18,12 +15,11 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
   // Intermediate Schema
   def bufferSchema = StructType(Array(
     StructField("size", IntegerType),
-    StructField("sumUp", IntegerType),
-    StructField("prevY", IntegerType),
-    StructField("currY", IntegerType),
-    StructField("hourIndex", IntegerType)
+    StructField("rangeSum", IntegerType),
+    StructField("previousYear", IntegerType),
+    StructField("currentYear", IntegerType),
+    StructField("distinctYearCount", IntegerType)
   ))
-
 
   def dataType: DataType = IntegerType
 
@@ -37,7 +33,6 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     buffer(4) = 1
   }
 
-  // Iterate over each entry of a group
   def update(buffer: MutableAggregationBuffer, input: Row) = {
     val dateString = input(0).toString()
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
