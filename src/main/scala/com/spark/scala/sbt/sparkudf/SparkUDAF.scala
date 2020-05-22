@@ -20,7 +20,7 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     StructField("distinctYearCount", IntegerType)
   ))
 
-  def dataType: DataType = IntegerType
+  def dataType: DataType = DoubleType
 
   def deterministic = true
 
@@ -56,7 +56,7 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
   }
 
   def evaluate(buffer: Row) = {
-    buffer.getInt(0)/buffer.getInt(3)
+    buffer.getInt(0).asInstanceOf[Double]/buffer.getInt(3)
   }
 
 }
