@@ -15,7 +15,6 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
   // Intermediate Schema
   def bufferSchema = StructType(Array(
     StructField("size", IntegerType),
-    StructField("rangeSum", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("distinctYearCount", IntegerType)
@@ -29,8 +28,7 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     buffer(0) = 0
     buffer(1) = 0
     buffer(2) = 0
-    buffer(3) = 0
-    buffer(4) = 1
+    buffer(3) = 1
   }
 
   def update(buffer: MutableAggregationBuffer, input: Row) = {
@@ -38,29 +36,27 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
-    if(buffer.getInt(3) == 0){
-      buffer(3) = zdt.getYear()
+    if(buffer.getInt(2) == 0){
+      buffer(2) = zdt.getYear()
     }
-    buffer(2) = buffer(3)
-    buffer(3) = zdt.getYear()
+    buffer(1) = buffer(2)
+    buffer(2) = zdt.getYear()
 
-    if(buffer.getInt(2) != buffer.getInt(3)){
-      buffer(4) = buffer.getInt(4) + 1
-      buffer(1)  = 1
-    }
-    else{
-      buffer(1) = buffer.getInt(1)  + 1
+    if(buffer.getInt(2) != buffer.getInt(1)){
+      buffer(3) = buffer.getInt(3) + 1
     }
     buffer(0) = buffer.getInt(0) + 1
+
+    println(buffer(0),buffer(1),buffer(2),buffer(3))
   }
 
   def merge(buffer1: MutableAggregationBuffer, buffer2: Row) = {
     buffer1(0) = buffer2.getInt(0)
-    buffer1(4) = buffer2.getInt(4)
+    buffer1(3) = buffer2.getInt(3)
   }
 
   def evaluate(buffer: Row) = {
-    buffer.getInt(0)/buffer.getInt(4)
+    buffer.getInt(0)/buffer.getInt(3)
   }
 
 }
