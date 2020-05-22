@@ -14,7 +14,7 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
 
   // Intermediate Schema
   def bufferSchema = StructType(Array(
-    StructField("size", IntegerType),
+    StructField("totalBookings", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
     StructField("distinctYearCount", IntegerType)
