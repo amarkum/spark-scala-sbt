@@ -1,5 +1,7 @@
 package com.spark.scala.sbt.scala
 
+import java.time.format.DateTimeFormatter
+
 object Syntax {
 
   def main(args: Array[String]): Unit = {
@@ -16,7 +18,18 @@ object Syntax {
     sendGreetings("Jane")
 
     /**
-     * 2. Functions
+     * 2. Date and Time
+     */
+    val dateString = "2018-04-07 09:15:31.0"
+
+    val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
+    import java.time.ZoneId
+    import java.time.ZonedDateTime
+    val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
+    System.out.println(zdt.getDayOfYear)
+
+    /**
+     * 3. Functions
      */
 
     // method to find sum
@@ -40,7 +53,7 @@ object Syntax {
     println("power of 2 & 2 = "+findPower(2,2))
 
     /**
-     * 2. Functional Programming
+     * 4. Functional Programming
      */
 
     val square : Int  => Int = _*10
