@@ -1,8 +1,7 @@
 package com.spark.scala.sbt.assignment
 
-import com.spark.scala.sbt.sparkudf.Count
+import com.spark.scala.sbt.sparkudf.YearlyAvg
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions._
 
 /**
  * Problem Statement : Rapido
@@ -18,7 +17,7 @@ object Assignment {
   def main(args: Array[String]): Unit = {
 
     // Create a new UDAF from Count UDAF Class
-    val Count = new Count()
+    val YearlyAvg = new YearlyAvg()
 
     //Create a Spark Session
     val sparkSession = SparkSession.builder().master("local")
@@ -28,7 +27,7 @@ object Assignment {
       .csv("src/main/resources/rapido/dataset/rapido-data.csv")
 
     val filtered_df = df.groupBy("number")
-      .agg(Count(df.col("ts")).alias("Timestamp"))
+      .agg(YearlyAvg(df.col("ts")).alias("Timestamp"))
 
     filtered_df.printSchema()
     filtered_df.show(20, false)
