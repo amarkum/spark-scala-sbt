@@ -16,10 +16,8 @@ object Assignment {
 
   def main(args: Array[String]): Unit = {
 
-    // Create a new UDAF from Count UDAF Class
     val YearlyAvg = new YearlyAvg()
 
-    //Create a Spark Session
     val sparkSession = SparkSession.builder().master("local")
       .getOrCreate()
 
@@ -27,10 +25,10 @@ object Assignment {
       .csv("src/main/resources/rapido/dataset/rapido-data.csv")
 
     val filtered_df = df.groupBy("number")
-      .agg(YearlyAvg(df.col("ts")).alias("Timestamp"))
+      .agg(YearlyAvg(df.col("ts")).alias("Yearly Average"))
 
     filtered_df.printSchema()
     filtered_df.show(20, false)
-//    filtered_df.show(df.count.toInt, false)
+    // filtered_df.show(df.count.toInt, false)
   }
 }

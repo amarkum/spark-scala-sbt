@@ -9,10 +9,8 @@ import org.apache.spark.sql.types.{StructField, _}
 
 class YearlyAvg() extends UserDefinedAggregateFunction {
 
-  // Input Data Type Schema
   def inputSchema: StructType = StructType(Array(StructField("ts", TimestampType)))
 
-  // Intermediate Schema
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
     StructField("previousYear", IntegerType),
@@ -36,18 +34,16 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
-    if(buffer.getInt(2) == 0){
+    if (buffer.getInt(2) == 0) {
       buffer(2) = zdt.getYear()
     }
     buffer(1) = buffer(2)
     buffer(2) = zdt.getYear()
 
-    if(buffer.getInt(2) != buffer.getInt(1)){
+    if (buffer.getInt(2) != buffer.getInt(1)) {
       buffer(3) = buffer.getInt(3) + 1
     }
     buffer(0) = buffer.getInt(0) + 1
-
-    println(buffer(0),buffer(1),buffer(2),buffer(3))
   }
 
   def merge(buffer1: MutableAggregationBuffer, buffer2: Row) = {
@@ -56,7 +52,7 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
   }
 
   def evaluate(buffer: Row) = {
-    buffer.getInt(0).asInstanceOf[Double]/buffer.getInt(3)
+    buffer.getInt(0).asInstanceOf[Double] / buffer.getInt(3)
   }
 
 }
