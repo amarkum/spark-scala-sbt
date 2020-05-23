@@ -1,6 +1,6 @@
 package com.spark.scala.sbt.assignment
 
-import com.spark.scala.sbt.sparkudf.{MonthlyAvg, YearlyAvg}
+import com.spark.scala.sbt.sparkudf.{HourlyAvg, MonthlyAvg, WeeklyAvg, YearlyAvg}
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -18,6 +18,8 @@ object Assignment {
 
     val YearlyAvg = new YearlyAvg()
     val MonthlyAvg = new MonthlyAvg()
+    val WeeklyAvg = new WeeklyAvg()
+    val HourlyAvg = new HourlyAvg()
 
     val sparkSession = SparkSession.builder().master("local")
       .getOrCreate()
@@ -26,8 +28,12 @@ object Assignment {
       .csv("src/main/resources/rapido/dataset/rapido-data.csv")
 
     val filtered_df = df.groupBy("number")
-      .agg(YearlyAvg(df.col("ts")).alias("Yearly Average"),
-        MonthlyAvg(df.col("ts")).alias("Monthly Average"))
+      .agg(
+        YearlyAvg(df.col("ts")).alias("Yearly Average"),
+        MonthlyAvg(df.col("ts")).alias("Monthly Average"),
+        WeeklyAvg(df.col("ts")).alias("Weekly Average"),
+        HourlyAvg(df.col("ts")).alias("Hourly Average"),
+      )
 
     filtered_df.printSchema()
     filtered_df.show(20, false)

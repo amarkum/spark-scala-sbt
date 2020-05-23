@@ -1,6 +1,9 @@
 package com.spark.scala.sbt.scala
 
 import java.time.format.DateTimeFormatter
+import java.time.temporal.{IsoFields, WeekFields}
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 object Syntax {
 
@@ -20,13 +23,12 @@ object Syntax {
     /**
      * 2. Date and Time
      */
-    val dateString = "2018-04-07 09:15:31.0"
+    val dateString = "2012-05-24 09:15:31.0"
 
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
-    import java.time.ZoneId
-    import java.time.ZonedDateTime
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
-    System.out.println(zdt.getMonthValue)
+
+    System.out.println(zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR))
 
     /**
      * 3. Functions

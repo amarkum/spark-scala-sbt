@@ -43,7 +43,7 @@ class MonthlyAvg() extends UserDefinedAggregateFunction {
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
-    if (buffer.getInt(3) == 0 || buffer.getInt(5) == 0) {
+    if (buffer.getInt(5) == 0) {
       buffer(3) = zdt.getYear()
       buffer(5) = zdt.getMonthValue()
     }
@@ -53,7 +53,7 @@ class MonthlyAvg() extends UserDefinedAggregateFunction {
     buffer(4) = buffer(5)
     buffer(5) = zdt.getMonthValue()
 
-    if (buffer.getInt(3) != buffer.getInt(2) || buffer.getInt(5) != buffer.getInt(4)) {
+    if (buffer.getInt(5) != buffer.getInt(4) || buffer.getInt(3) != buffer.getInt(2)) {
       buffer(1) = buffer.getInt(1) + 1
     }
     buffer(0) = buffer.getInt(0) + 1
