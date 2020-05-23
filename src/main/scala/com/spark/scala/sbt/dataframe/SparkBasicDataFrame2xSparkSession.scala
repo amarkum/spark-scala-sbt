@@ -32,7 +32,7 @@ object SparkBasicDataFrame2xSparkSession {
     //Show the schema
     df.printSchema()
 
-    //show the content of df
-    df.show()
+    //show entire content of df
+    df.show(df.count.toInt, false)
   }
 }

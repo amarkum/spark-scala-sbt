@@ -76,8 +76,6 @@ class WeeklyAvg() extends UserDefinedAggregateFunction {
   }
 
   def evaluate(buffer: Row) = {
-    println("Weekly Total Record "+buffer.getInt(0))
-    println("Distinct Week "+buffer.getInt(1))
     buffer.getInt(0).asInstanceOf[Double] / buffer.getInt(1)
   }
 

@@ -36,7 +36,15 @@ object Assignment {
       )
 
     filtered_df.printSchema()
-    filtered_df.show(20, false)
-    // filtered_df.show(df.count.toInt, false)
+
+    filtered_df
+      .repartition(1)
+      .write
+      .option("header", "true")
+      .option("compression","none")
+      .mode("overwrite")
+      .csv("src/main/resources/rapido/average/")
+
+     filtered_df.show(20, false)
   }
 }
