@@ -13,9 +13,9 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
 
   def bufferSchema = StructType(Array(
     StructField("totalBookings", IntegerType),
+    StructField("distinctYearCount", IntegerType),
     StructField("previousYear", IntegerType),
     StructField("currentYear", IntegerType),
-    StructField("distinctYearCount", IntegerType)
   ))
 
   def dataType: DataType = DoubleType
@@ -34,25 +34,25 @@ class YearlyAvg() extends UserDefinedAggregateFunction {
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
-    if (buffer.getInt(2) == 0) {
-      buffer(2) = zdt.getYear()
+    if (buffer.getInt(3) == 0) {
+      buffer(3) = zdt.getYear()
     }
-    buffer(1) = buffer(2)
-    buffer(2) = zdt.getYear()
+    buffer(2) = buffer(3)
+    buffer(3) = zdt.getYear()
 
-    if (buffer.getInt(2) != buffer.getInt(1)) {
-      buffer(3) = buffer.getInt(3) + 1
+    if (buffer.getInt(3) != buffer.getInt(2)) {
+      buffer(1) = buffer.getInt(1) + 1
     }
     buffer(0) = buffer.getInt(0) + 1
   }
 
   def merge(buffer1: MutableAggregationBuffer, buffer2: Row) = {
     buffer1(0) = buffer2.getInt(0)
-    buffer1(3) = buffer2.getInt(3)
+    buffer1(1) = buffer2.getInt(1)
   }
 
   def evaluate(buffer: Row) = {
-    buffer.getInt(0).asInstanceOf[Double] / buffer.getInt(3)
+    buffer.getInt(0).asInstanceOf[Double] / buffer.getInt(1)
   }
 
 }

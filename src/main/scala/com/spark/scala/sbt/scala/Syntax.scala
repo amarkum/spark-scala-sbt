@@ -26,7 +26,7 @@ object Syntax {
     import java.time.ZoneId
     import java.time.ZonedDateTime
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
-    System.out.println(zdt.getDayOfYear)
+    System.out.println(zdt.getMonthValue)
 
     /**
      * 3. Functions
