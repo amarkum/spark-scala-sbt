@@ -29,10 +29,10 @@ object Assignment {
 
     val filtered_df = df.groupBy("number")
       .agg(
-        YearlyAvg(df.col("ts")).alias("Yearly Average"),
-        MonthlyAvg(df.col("ts")).alias("Monthly Average"),
-        WeeklyAvg(df.col("ts")).alias("Weekly Average"),
-        HourlyAvg(df.col("ts")).alias("Hourly Average"),
+        YearlyAvg(df.col("ts")).alias("yearly_avg"),
+        MonthlyAvg(df.col("ts")).alias("monthly_avg"),
+        WeeklyAvg(df.col("ts")).alias("weekly_avg"),
+        HourlyAvg(df.col("ts")).alias("hourly_avg"),
       )
 
     filtered_df.printSchema()
