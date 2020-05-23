@@ -20,9 +20,11 @@ class HourlyAvg() extends UserDefinedAggregateFunction {
     StructField("previousMonth", IntegerType),
     StructField("currentMonth", IntegerType),
     StructField("previousWeek", IntegerType),
-    StructField("CurrentWeek", IntegerType),
+    StructField("currentWeek", IntegerType),
+    StructField("previousDay", IntegerType),
+    StructField("currentDay", IntegerType),
     StructField("previousHour", IntegerType),
-    StructField("CurrentHour", IntegerType)
+    StructField("currentHour", IntegerType)
   ))
 
   def dataType: DataType = DoubleType
@@ -45,9 +47,13 @@ class HourlyAvg() extends UserDefinedAggregateFunction {
     buffer(6) = 0
     buffer(7) = 0
 
-    // Hourly Buffer
+    // Daily Buffer
     buffer(8) = 0
     buffer(9) = 0
+
+    // Hourly Buffer
+    buffer(10) = 0
+    buffer(11) = 0
 
   }
 
@@ -57,24 +63,31 @@ class HourlyAvg() extends UserDefinedAggregateFunction {
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
     if (buffer.getInt(7) == 0) {
-      buffer(3) = zdt.getYear
-      buffer(5) = zdt.getMonthValue
+      buffer(3) = zdt.getYear()
+      buffer(5) = zdt.getMonthValue()
       buffer(7) = zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
-      buffer(9) = zdt.getHour
+      buffer(9) = zdt.getDayOfWeek.getValue
+      buffer(11) = zdt.getHour
+
     }
     buffer(2) = buffer(3)
-    buffer(3) = zdt.getYear
+    buffer(3) = zdt.getYear()
 
     buffer(4) = buffer(5)
-    buffer(5) = zdt.getMonthValue
+    buffer(5) = zdt.getMonthValue()
 
     buffer(6) = buffer(7)
     buffer(7) = zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
 
     buffer(8) = buffer(9)
-    buffer(9) = zdt.getHour
+    buffer(9) = zdt.getDayOfWeek.getValue
 
-    if (buffer.getInt(9) != buffer.getInt(8) || buffer.getInt(7) != buffer.getInt(6) || buffer.getInt(5) != buffer.getInt(4) || buffer.getInt(3) != buffer.getInt(2)) {
+    buffer(10) = buffer(11)
+    buffer(11) = zdt.getHour
+
+    if (buffer.getInt(11) != buffer.getInt(10) || buffer.getInt(9) != buffer.getInt(8)
+      || buffer.getInt(7) != buffer.getInt(6) || buffer.getInt(5) != buffer.getInt(4)
+      || buffer.getInt(3) != buffer.getInt(2)) {
       buffer(1) = buffer.getInt(1) + 1
     }
     buffer(0) = buffer.getInt(0) + 1

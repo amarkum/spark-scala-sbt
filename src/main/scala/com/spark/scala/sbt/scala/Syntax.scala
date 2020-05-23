@@ -23,12 +23,12 @@ object Syntax {
     /**
      * 2. Date and Time
      */
-    val dateString = "2012-05-24 09:15:31.0"
+    val dateString = "2020-05-25 09:15:31.0"
 
     val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")
     val zdt = ZonedDateTime.parse(dateString, dtf.withZone(ZoneId.systemDefault))
 
-    System.out.println(zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR))
+    System.out.println(zdt.getHour)
 
     /**
      * 3. Functions

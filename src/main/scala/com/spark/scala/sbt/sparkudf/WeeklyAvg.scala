@@ -64,7 +64,8 @@ class WeeklyAvg() extends UserDefinedAggregateFunction {
     buffer(6) = buffer(7)
     buffer(7) = zdt.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
 
-    if (buffer.getInt(7) != buffer.getInt(6) || buffer.getInt(5) != buffer.getInt(4) || buffer.getInt(3) != buffer.getInt(2) ) {
+    if (buffer.getInt(7) != buffer.getInt(6) || buffer.getInt(5) != buffer.getInt(4)
+      || buffer.getInt(3) != buffer.getInt(2)) {
       buffer(1) = buffer.getInt(1) + 1
     }
     buffer(0) = buffer.getInt(0) + 1
