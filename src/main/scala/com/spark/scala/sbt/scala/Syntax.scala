@@ -1,9 +1,7 @@
 package com.spark.scala.sbt.scala
 
+import java.time.{ZoneId, ZonedDateTime}
 import java.time.format.DateTimeFormatter
-import java.time.temporal.{IsoFields, WeekFields}
-import java.time.ZoneId
-import java.time.ZonedDateTime
 
 object Syntax {
 
