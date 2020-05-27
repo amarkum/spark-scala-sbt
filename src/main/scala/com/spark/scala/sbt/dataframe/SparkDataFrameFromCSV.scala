@@ -6,7 +6,7 @@ object SparkDataFrameFromCSV {
 
   def main(args: Array[String]): Unit = {
 
-    //Create a Spark Session
+    // Create a Spark Session
     val sparkSession = SparkSession.builder()
       .master("local")
       .appName("Spark DF from CSV")
@@ -17,14 +17,25 @@ object SparkDataFrameFromCSV {
     val df = sparkSession.read.options(Map("header" -> "true", "inferSchema" -> "true"))
       .csv("src/main/resources/dataframe/csv/customer.csv")
 
-    // To use "$" in-front of a column name, as evaluation operator we must import implicits
+    /**
+     * Partitioning
+     */
+    // we can use partitionBy() method to partition the dataframe by a single or multiple column.
+    df.write.partitionBy("Region","City").format("csv").save("namesPartByColor.parquet")
 
+    /**
+     * Expression Evaluation - $
+     */
+    // To use "$" in-front of a column name, as evaluation operator we must import implicits
     // select will select only the required columns
     val selectedDF = df.select("Address", "Reseller")
 
     // select will select only the required columns, $ is mandatory for all columns.
     val filteredDF = selectedDF.select($"Address", ($"Reseller"+3).as("Reseller"))
 
+    /**
+     * Filtered Dataframe
+     */
     filteredDF.printSchema()
     filteredDF.show()
 
