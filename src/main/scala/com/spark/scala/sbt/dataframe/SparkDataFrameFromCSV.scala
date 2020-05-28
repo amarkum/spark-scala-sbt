@@ -1,6 +1,7 @@
 package com.spark.scala.sbt.dataframe
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.{concat, lit}
 
 object SparkDataFrameFromCSV {
 
@@ -16,6 +17,10 @@ object SparkDataFrameFromCSV {
 
     val df = sparkSession.read.options(Map("header" -> "true", "inferSchema" -> "true"))
       .csv("src/main/resources/dataframe/csv/customer.csv")
+
+    // To concatenate columns we can use concat method, we need to import org.apache.spark.sql.functions.{concat, lit}
+    val concatDf = df.select(concat($"Region", lit(" & "), $"City").as("regionCity"))
+    concatDf.show(false)
 
     /**
      * Partitioning
