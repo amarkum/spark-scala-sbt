@@ -24,6 +24,7 @@ object AvroProcessing {
     // Save the avro data into CSV
     avroDF.write
       .option("compression","none")
+      .option("header", "true")
       .mode("overwrite")
       .csv("src/main/resources/dataframe/avro-csv")
   }
