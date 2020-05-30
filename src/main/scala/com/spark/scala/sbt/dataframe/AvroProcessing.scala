@@ -15,10 +15,11 @@ object AvroProcessing {
     //Read avro file and create a Data Frame
     val avroDF = sparkSession.read
       .format("avro")
-      .load("src/main/resources/avro/*")
+      .load("src/main/resources/dataframe/avro/tweets.avro")
+      .drop()
 
     avroDF.printSchema()
-    avroDF.show()
+    avroDF.show(500)
 
     // Save the avro data into CSV
     avroDF.write
