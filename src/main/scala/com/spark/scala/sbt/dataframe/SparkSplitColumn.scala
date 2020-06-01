@@ -1,7 +1,8 @@
 package com.spark.scala.sbt.dataframe
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.functions._
 
 object SparkSplitColumn {
   def main(args: Array[String]): Unit = {
@@ -28,6 +29,10 @@ object SparkSplitColumn {
       .option("delimiter", "_")
       .load("src/main/resources/data/sample.txt")
 
-    df.show()
+   val ndf =  df.withColumn("doc_name", concat_ws("_", col("doc_name"), col("revision_label")))
+      .withColumn("extension", substring_index(col("revision_label"), ".", -1))
+      .withColumn("revision_label", regexp_extract(col("revision_label"),"""\d+""", 0))
+
+     ndf.show(false)
   }
 }
