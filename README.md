@@ -1,4 +1,5 @@
-# Spark in Scala using SBT (Scala Build Tool) - A Beginnner's Guid to Spark & Scala
+# Spark in Scala using SBT (Scala Build Tool)
+## - A Beginnner's Guid to Spark & Scala
 
 Spark on Scala with Examples
 - Dataframe
