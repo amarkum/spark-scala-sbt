@@ -2,6 +2,7 @@
 ## A Beginnner's Guid to Spark in Scala
 
 Spark on Scala with Examples
+- RDDs
 - Dataframe
 - Datasets
 - Read from Different file formats
