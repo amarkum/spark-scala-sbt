@@ -1,2 +1,8 @@
 # Spark in Scala using SBT (Scala Build Tool)
-an SBT controlled project for Spark in Scala template
+Spark on Scala with Examples
+- Datafram
+- Datasets
+- Read from Different file formats
+- Write Datafram to multiple formats
+
+
