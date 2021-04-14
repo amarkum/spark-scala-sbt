@@ -4,6 +4,8 @@
 Spark on Scala with Examples
 - RDDs
 - Dataframe
+- Dataframe with UDFs
+- Dataframe with UDAFs
 - Datasets
 - Read from Different file formats
 - Write Datafram to multiple formats
