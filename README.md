@@ -39,6 +39,33 @@ object Hospital {
 }
 ```
 
+### Case Class
+Patient
+
+```scala
+package com.test.serialization.models
+
+case class Patient(name: String = "XXXXX", regNumber: Int, address:Address) {
+
+  def lengthOfName= {
+      name.length
+  }
+
+  def getFullName = {
+    "Mr./Mrs. "+this.name
+  }
+
+}
+```
+Address
+
+```scala
+package com.test.serialization.models
+
+case class Address(country:String,state:String,zip:Int){
+}
+```
+
 Output
 ```json
 {
