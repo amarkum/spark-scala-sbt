@@ -11,3 +11,43 @@ Spark on Scala with Examples
 - Write Datafram to multiple formats
 
 
+## Scala Marshall/Unmarshall JSON - with Spray JSON
+
+```scala
+libraryDependencies += "io.spray" %%  "spray-json" % "1.3.6"
+```
+
+```scala
+package com.test.serialization
+
+import models.{Address, Patient}
+import spray.json._
+
+object Hospital {
+
+  object MyJsonProtocol extends DefaultJsonProtocol {
+    implicit val address = jsonFormat(Address, "country", "state", "zip")
+    implicit val patient = jsonFormat(Patient, "name", "regNumber", "address")
+  }
+
+  import MyJsonProtocol._
+
+  def main(args: Array[String]): Unit = {
+    val p1 = Patient(name = "Amar", regNumber = 234, address = Address("IN", "KA", 49))
+    println(p1.toJson.sortedPrint)
+  }
+}
+```
+
+Output
+```json
+{
+  "address": {
+    "country": "IN",
+    "state": "KA",
+    "zip": 49
+  },
+  "name": "Amar",
+  "regNumber": 234
+}
+```
