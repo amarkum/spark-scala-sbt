@@ -1,5 +1,5 @@
 # Spark in Scala using SBT (Scala Build Tool)
-## A Beginnner's Guid to Spark in Scala
+## A Beginner's Guide to Spark in Scala
 
 Spark on Scala with Examples
 - RDDs
